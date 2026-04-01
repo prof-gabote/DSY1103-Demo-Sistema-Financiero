@@ -12,21 +12,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class BoletaDTO {
 
-    @NotNull(message = "El número de folio es obligatorio.")
-    private String folio;
-    @NotNull(message = "El rut del proveedor es obligatorio.")
-    private String rutProveedor;
-    @NotBlank(message = "La glosa es obligatoria.")
-    private String glosa;
-    private String tipo;
-    @NotNull(message = "La fecha de emisión es obligatoria.")
-    private LocalDate fecha;
-    private int montoBruto; //Monto con IVA
-    @Min(value = 1, message = "El monto neto no puede ser negativo ni 0.")
-    private int montoNeto; //Monto sin IVA
+//debes implementar los campos necesarios para representar una boleta
 
 }

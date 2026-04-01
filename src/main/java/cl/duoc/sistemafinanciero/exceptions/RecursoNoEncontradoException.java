@@ -1,9 +1,7 @@
 package cl.duoc.sistemafinanciero.exceptions;
 
-public class RecursoNoEncontradoException extends RuntimeException {
+public class RecursoNoEncontradoException {
 
-    public RecursoNoEncontradoException(String mensaje) {
-        super(mensaje);
-    }
+    // Debes implementar esta clase de excepción personalizada para manejar casos donde un recurso no es encontrado
 
 }

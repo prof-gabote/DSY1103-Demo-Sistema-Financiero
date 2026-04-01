@@ -20,68 +20,37 @@ public class BoletaService {
 
     public List<BoletaDTO> obtenerTodasLasBoletas() {
 
-        List<Boleta> boletas = boletaRepository.findAll();
-        List<BoletaDTO> boletaDTOs = new ArrayList<>();
+        // Debes implementar la lógica para obtener todas las boletas y convertirlas a DTOs
 
-        if (!boletas.isEmpty()) {
-
-            for (Boleta boleta : boletas) {
-                boletaDTOs.add(BoletaDTOMapper.toDTO(boleta));
-            }
-
-        }
-
-        return boletaDTOs;
+        return null;
     }
 
     public BoletaDTO obtenerBoletaPorFolio(String folio) {
 
-        Boleta boleta = boletaRepository.findByFolio(folio);
+        // Debes implementar la lógica para obtener una boleta por su número de folio y convertirla a DTO
 
-        if (boleta == null || !boleta.getFolio().equals(folio)) {
-            throw new RecursoNoEncontradoException("Número de folio incorrecto.");
-        }
-
-        return BoletaDTOMapper.toDTO(boleta);
+        return null;
 
     }
 
     public boolean agregarBoleta(BoletaDTO boletaDTO) {
 
-        if (boletaDTO == null || boletaDTO.getFolio() == null || boletaDTO.getFolio().isEmpty()) {
-            throw new IllegalArgumentException("La boleta o su número de folio no pueden ser nulos o vacíos.");
-        }
+        // Debes implementar la lógica para agregar una nueva boleta utilizando el DTO proporcionado
 
-        Boleta boleta = BoletaDTOMapper.toModel(boletaDTO);
-        return boletaRepository.save(boleta);
+        return false;
     }
 
     public boolean actualizarBoleta(String folio, BoletaDTO boletaDTOActualizada) {
 
-        if (boletaDTOActualizada == null || boletaDTOActualizada.getFolio() == null
-                || boletaDTOActualizada.getFolio().isEmpty()) {
-            throw new IllegalArgumentException(
-                    "La boleta actualizada o su número de folio no pueden ser nulos o vacíos.");
-        }
+        //Debes implementar la lógica para actualizar una boleta existente utilizando el número de folio y el DTO actualizado
 
-        Boleta boletaExistente = boletaRepository.findByFolio(folio);
-        System.out.println("Boleta existente: " + boletaExistente);
-
-        if (boletaExistente == null || !boletaExistente.getFolio().equals(folio)) {
-            throw new RecursoNoEncontradoException("Número de folio incorrecto.");
-        }
-
-        return boletaRepository.update(boletaExistente.getId(), BoletaDTOMapper.toModel(boletaDTOActualizada));
+        return false;
     }
 
     public boolean eliminarBoleta(String folio) {
 
-        Boleta boletaExistente = boletaRepository.findByFolio(folio);
+        //Debes implementar la lógica para eliminar una boleta utilizando su número de folio
 
-        if (boletaExistente == null || !boletaExistente.getFolio().equals(folio)) {
-            throw new RecursoNoEncontradoException("Número de folio incorrecto.");
-        }
-
-        return boletaRepository.deleteByFolio(folio);
+        return false;
     }
 }
