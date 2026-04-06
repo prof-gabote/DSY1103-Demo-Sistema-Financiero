@@ -2,6 +2,11 @@ package cl.duoc.sistemafinanciero.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,13 +14,18 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
+@Entity
+@Table(name = "boleta")
 public class Boleta {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String folio;
     private String rutProveedor;
     private String glosa;
     private String tipo;
-    private LocalDate fecha;
+    private LocalDate fechaEmision;
     private int montoBruto; // Monto con IVA
     private int montoNeto; // Monto sin IVA
     private String estado;

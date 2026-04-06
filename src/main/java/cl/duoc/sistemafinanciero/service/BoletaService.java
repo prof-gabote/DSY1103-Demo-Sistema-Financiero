@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import cl.duoc.sistemafinanciero.repository.BoletaRepository;
+import jakarta.transaction.Transactional;
 import cl.duoc.sistemafinanciero.dto.BoletaDTO;
 import cl.duoc.sistemafinanciero.dto.BoletaDTOMapper;
 import cl.duoc.sistemafinanciero.exceptions.RecursoNoEncontradoException;
@@ -14,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+
+@Transactional
 public class BoletaService {
 
     private final BoletaRepository boletaRepository;
@@ -53,25 +56,21 @@ public class BoletaService {
         }
 
         Boleta boleta = BoletaDTOMapper.toModel(boletaDTO);
-        return boletaRepository.save(boleta);
+        return boletaRepository.save(boleta) != null;
     }
 
     public boolean actualizarBoleta(String folio, BoletaDTO boletaDTOActualizada) {
 
-        if (boletaDTOActualizada == null || boletaDTOActualizada.getFolio() == null
-                || boletaDTOActualizada.getFolio().isEmpty()) {
-            throw new IllegalArgumentException(
-                    "La boleta actualizada o su número de folio no pueden ser nulos o vacíos.");
-        }
-
+        //solo existe el metodo save para poder actualizar
         Boleta boletaExistente = boletaRepository.findByFolio(folio);
-        System.out.println("Boleta existente: " + boletaExistente);
-
         if (boletaExistente == null || !boletaExistente.getFolio().equals(folio)) {
             throw new RecursoNoEncontradoException("Número de folio incorrecto.");
         }
 
-        return boletaRepository.update(boletaExistente.getId(), BoletaDTOMapper.toModel(boletaDTOActualizada));
+        Boleta boletaActualizada = BoletaDTOMapper.toModel(boletaDTOActualizada);
+        boletaActualizada.setId(boletaExistente.getId());
+        return boletaRepository.save(boletaActualizada) != null;
+
     }
 
     public boolean eliminarBoleta(String folio) {
@@ -82,6 +81,7 @@ public class BoletaService {
             throw new RecursoNoEncontradoException("Número de folio incorrecto.");
         }
 
-        return boletaRepository.deleteByFolio(folio);
+        boletaRepository.deleteByFolio(folio);
+        return true;
     }
 }

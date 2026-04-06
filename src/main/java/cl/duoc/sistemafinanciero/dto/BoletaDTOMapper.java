@@ -14,7 +14,7 @@ public class BoletaDTOMapper {
         boletaDTO.setRutProveedor(boleta.getRutProveedor());
         boletaDTO.setGlosa(boleta.getGlosa());
         boletaDTO.setTipo(boleta.getTipo());
-        boletaDTO.setFecha(boleta.getFecha());
+        boletaDTO.setFecha(boleta.getFechaEmision());
         boletaDTO.setMontoBruto(boleta.getMontoBruto());
         boletaDTO.setMontoNeto(boleta.getMontoNeto());
 
@@ -31,9 +31,10 @@ public class BoletaDTOMapper {
         boleta.setRutProveedor(boletaDTO.getRutProveedor());
         boleta.setGlosa(boletaDTO.getGlosa());
         boleta.setTipo(boletaDTO.getTipo());
-        boleta.setFecha(boletaDTO.getFecha());
+        boleta.setFechaEmision(boletaDTO.getFecha());
         boleta.setMontoBruto(boletaDTO.getMontoBruto());
         boleta.setMontoNeto(boletaDTO.getMontoNeto());
+        boleta.setEstado("PENDIENTE");
 
         return boleta;
     }
