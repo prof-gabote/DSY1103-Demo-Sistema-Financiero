@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class Boleta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String folio;
     private String rutProveedor;
     private String glosa;
