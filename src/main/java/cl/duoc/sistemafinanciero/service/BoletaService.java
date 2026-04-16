@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import cl.duoc.sistemafinanciero.repository.BoletaRepository;
+import jakarta.transaction.Transactional;
 import cl.duoc.sistemafinanciero.dto.BoletaDTO;
 import cl.duoc.sistemafinanciero.dto.BoletaDTOMapper;
 import cl.duoc.sistemafinanciero.exceptions.RecursoNoEncontradoException;
@@ -14,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+
+@Transactional
 public class BoletaService {
 
     private final BoletaRepository boletaRepository;
@@ -37,20 +40,29 @@ public class BoletaService {
 
         // Debes implementar la lógica para agregar una nueva boleta utilizando el DTO proporcionado
 
-        return false;
+        Boleta boleta = BoletaDTOMapper.toModel(boletaDTO);
+        return boletaRepository.save(boleta) != null;
     }
 
     public boolean actualizarBoleta(String folio, BoletaDTO boletaDTOActualizada) {
 
-        //Debes implementar la lógica para actualizar una boleta existente utilizando el número de folio y el DTO actualizado
+        //solo existe el metodo save para poder actualizar
+        Boleta boletaExistente = boletaRepository.findByFolio(folio);
+        if (boletaExistente == null || !boletaExistente.getFolio().equals(folio)) {
+            throw new RecursoNoEncontradoException("Número de folio incorrecto.");
+        }
 
-        return false;
+        Boleta boletaActualizada = BoletaDTOMapper.toModel(boletaDTOActualizada);
+        boletaActualizada.setId(boletaExistente.getId());
+        return boletaRepository.save(boletaActualizada) != null;
+
     }
 
     public boolean eliminarBoleta(String folio) {
 
         //Debes implementar la lógica para eliminar una boleta utilizando su número de folio
 
-        return false;
+        boletaRepository.deleteByFolio(folio);
+        return true;
     }
 }
