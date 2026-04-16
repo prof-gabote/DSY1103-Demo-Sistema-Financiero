@@ -28,6 +28,6 @@ public class BoletaDTO {
     private int montoBruto; //Monto con IVA
     @Min(value = 1, message = "El monto neto no puede ser negativo ni 0.")
     private int montoNeto; //Monto sin IVA
-
+//fix commit
     
 }
