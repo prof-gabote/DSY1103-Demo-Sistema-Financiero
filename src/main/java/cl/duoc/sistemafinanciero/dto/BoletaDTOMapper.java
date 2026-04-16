@@ -1,8 +1,15 @@
 package cl.duoc.sistemafinanciero.dto;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import cl.duoc.sistemafinanciero.model.Boleta;
+import cl.duoc.sistemafinanciero.model.Proveedor;
+import cl.duoc.sistemafinanciero.service.ProveedorService;
 
 public class BoletaDTOMapper {
+
+    @Autowired
+    private static ProveedorService proveedorService;
 
     public static BoletaDTO toDTO(Boleta boleta) {
         if (boleta == null) {
@@ -11,7 +18,7 @@ public class BoletaDTOMapper {
 
         BoletaDTO boletaDTO = new BoletaDTO();
         boletaDTO.setFolio(boleta.getFolio());
-        boletaDTO.setRutProveedor(boleta.getRutProveedor());
+        boletaDTO.setRutProveedor(boleta.getProveedor().getRut());
         boletaDTO.setGlosa(boleta.getGlosa());
         boletaDTO.setTipo(boleta.getTipo());
         boletaDTO.setFecha(boleta.getFechaEmision());
@@ -26,9 +33,11 @@ public class BoletaDTOMapper {
             return null;
         }
 
+        Proveedor proveedor = proveedorService.findByRutProveedor(boletaDTO.getRutProveedor());
+
         Boleta boleta = new Boleta();
         boleta.setFolio(boletaDTO.getFolio());
-        boleta.setRutProveedor(boletaDTO.getRutProveedor());
+        boleta.setProveedor(proveedor);
         boleta.setGlosa(boletaDTO.getGlosa());
         boleta.setTipo(boletaDTO.getTipo());
         boleta.setFechaEmision(boletaDTO.getFecha());
