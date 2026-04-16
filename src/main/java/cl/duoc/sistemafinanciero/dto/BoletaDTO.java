@@ -16,4 +16,5 @@ public class BoletaDTO {
 
 //debes implementar los campos necesarios para representar una boleta
 
+    
 }
