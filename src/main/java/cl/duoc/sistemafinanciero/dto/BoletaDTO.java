@@ -12,8 +12,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class BoletaDTO {
 
     @NotNull(message = "El número de folio es obligatorio.")

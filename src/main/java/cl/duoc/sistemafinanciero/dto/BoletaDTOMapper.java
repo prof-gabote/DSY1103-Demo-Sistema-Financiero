@@ -45,7 +45,7 @@ public class BoletaDTOMapper {
         boleta.setMontoNeto(boletaDTO.getMontoNeto());
         boleta.setEstado("PENDIENTE");
 
-        return boleta;
+        return null; // Debes implementar la lógica para convertir un DTO BoletaDTO a un modelo Boleta
     }
 
 }
