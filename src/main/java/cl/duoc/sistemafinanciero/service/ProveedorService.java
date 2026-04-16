@@ -20,5 +20,4 @@ public class ProveedorService {
         return proveedorRepository.findByRut(rutProveedor).orElseThrow(() -> new RecursoNoEncontradoException("Proveedor no encontrado"));
     }
 
-    //fix proveedor
 }
