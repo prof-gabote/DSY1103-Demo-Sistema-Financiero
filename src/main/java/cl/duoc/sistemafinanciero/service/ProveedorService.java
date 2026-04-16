@@ -13,7 +13,7 @@ public class ProveedorService {
     
     private final ProveedorRepository proveedorRepository;
 
-    public Proveedor findByRutProveedor(String rutProveedor) {
+    public Proveedor findByRut(String rutProveedor) {
         if (rutProveedor == null || rutProveedor.isEmpty()){
             throw new IllegalArgumentException("El RUT del proveedor no puede ser nulo o vacío");
         }

@@ -1,7 +1,5 @@
 package cl.duoc.sistemafinanciero.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +11,6 @@ public interface BoletaRepository extends JpaRepository<Boleta, Long> {
     Boleta findByFolio(String folio);
 
     void deleteByFolio(String folio);
+
+    boolean existsByFolio(String folio);
 }

@@ -5,16 +5,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import cl.duoc.sistemafinanciero.dto.ErrorDTO;
+
 @RestControllerAdvice
 public class ManejadorGlobalExcepciones {
 
-    //Debes implementar métodos para manejar diferentes tipos de excepciones, como RecursoNoEncontradoException, IllegalArgumentException, etc.
-
-    @ExceptionHandler()
-    public ResponseEntity<String> handleGenericException(Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno del servidor");
+    @ExceptionHandler(RecursoNoEncontradoException.class)
+    public ResponseEntity<ErrorDTO> handleRecursoNoEncontrado(RecursoNoEncontradoException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorDTO(HttpStatus.NOT_FOUND.value(), e.getMessage()));
     }
 
-    //Crea una clase interna de respuesta personalizada para manejar errores de validación, si es necesario
+    @ExceptionHandler(RecursoYaExisteException.class)
+    public ResponseEntity<ErrorDTO> handleRecursoYaExiste(RecursoYaExisteException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ErrorDTO(HttpStatus.CONFLICT.value(), e.getMessage()));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDTO> handleExcepcionGeneral(Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Ocurrió un error inesperado: " + e.getMessage()));
+    }
 
 }

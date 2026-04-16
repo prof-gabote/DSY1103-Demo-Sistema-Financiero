@@ -1,17 +1,19 @@
 package cl.duoc.sistemafinanciero.dto;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import cl.duoc.sistemafinanciero.model.Boleta;
 import cl.duoc.sistemafinanciero.model.Proveedor;
 import cl.duoc.sistemafinanciero.service.ProveedorService;
+import lombok.RequiredArgsConstructor;
 
+@Component
+@RequiredArgsConstructor
 public class BoletaDTOMapper {
 
-    @Autowired
-    private static ProveedorService proveedorService;
+    private final ProveedorService proveedorService;
 
-    public static BoletaDTO toDTO(Boleta boleta) {
+    public BoletaDTO toDTO(Boleta boleta) {
         if (boleta == null) {
             return null;
         }
@@ -28,12 +30,12 @@ public class BoletaDTOMapper {
         return boletaDTO;
     }
 
-    public static Boleta toModel(BoletaDTO boletaDTO) {
+    public Boleta toModel(BoletaDTO boletaDTO) {
         if (boletaDTO == null) {
             return null;
         }
 
-        Proveedor proveedor = proveedorService.findByRutProveedor(boletaDTO.getRutProveedor());
+        Proveedor proveedor = proveedorService.findByRut(boletaDTO.getRutProveedor());
 
         Boleta boleta = new Boleta();
         boleta.setFolio(boletaDTO.getFolio());
@@ -45,7 +47,7 @@ public class BoletaDTOMapper {
         boleta.setMontoNeto(boletaDTO.getMontoNeto());
         boleta.setEstado("PENDIENTE");
 
-        return null; // Debes implementar la lógica para convertir un DTO BoletaDTO a un modelo Boleta
+        return boleta;
     }
 
 }

@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import cl.duoc.sistemafinanciero.dto.BoletaDTO;
 import cl.duoc.sistemafinanciero.dto.BoletaDTOMapper;
 import cl.duoc.sistemafinanciero.exceptions.RecursoNoEncontradoException;
+import cl.duoc.sistemafinanciero.exceptions.RecursoYaExisteException;
 import cl.duoc.sistemafinanciero.model.Boleta;
 import lombok.RequiredArgsConstructor;
 
@@ -20,47 +21,63 @@ import lombok.RequiredArgsConstructor;
 public class BoletaService {
 
     private final BoletaRepository boletaRepository;
+    private final BoletaDTOMapper boletaDTOMapper;
 
     public List<BoletaDTO> obtenerTodasLasBoletas() {
 
-        // Debes implementar la lógica para obtener todas las boletas y convertirlas a DTOs
+        List<Boleta> boletas = boletaRepository.findAll();
+        List<BoletaDTO> boletaDTOs = new ArrayList<>();
 
-        return null;
+        if (boletas.isEmpty()) {
+            throw new RecursoNoEncontradoException("No se encontraron boletas.");
+        }
+
+        boletaDTOs = boletas.stream()
+            .map(boletaDTOMapper::toDTO)
+                .toList();
+
+        return boletaDTOs;
     }
 
     public BoletaDTO obtenerBoletaPorFolio(String folio) {
 
-        // Debes implementar la lógica para obtener una boleta por su número de folio y convertirla a DTO
+        Boleta boleta = boletaRepository.findByFolio(folio);
 
-        return null;
+        if (boleta == null) {
+            throw new RecursoNoEncontradoException("Boleta no encontrada.");
+        }
+
+        return boletaDTOMapper.toDTO(boleta);
 
     }
 
     public boolean agregarBoleta(BoletaDTO boletaDTO) {
 
-        // Debes implementar la lógica para agregar una nueva boleta utilizando el DTO proporcionado
+        if(boletaRepository.existsByFolio(boletaDTO.getFolio())) {
+            throw new RecursoYaExisteException("Ya existe una boleta con el mismo número de folio.");
+        }
 
-        Boleta boleta = BoletaDTOMapper.toModel(boletaDTO);
+        Boleta boleta = boletaDTOMapper.toModel(boletaDTO);
         return boletaRepository.save(boleta) != null;
     }
 
     public boolean actualizarBoleta(String folio, BoletaDTO boletaDTOActualizada) {
 
-        //solo existe el metodo save para poder actualizar
         Boleta boletaExistente = boletaRepository.findByFolio(folio);
         if (boletaExistente == null || !boletaExistente.getFolio().equals(folio)) {
             throw new RecursoNoEncontradoException("Número de folio incorrecto.");
         }
 
-        Boleta boletaActualizada = BoletaDTOMapper.toModel(boletaDTOActualizada);
+        Boleta boletaActualizada = boletaDTOMapper.toModel(boletaDTOActualizada);
         boletaActualizada.setId(boletaExistente.getId());
         return boletaRepository.save(boletaActualizada) != null;
-
     }
 
     public boolean eliminarBoleta(String folio) {
 
-        //Debes implementar la lógica para eliminar una boleta utilizando su número de folio
+        if (!boletaRepository.existsByFolio(folio)) {
+            throw new RecursoNoEncontradoException("Boleta no encontrada.");
+        }
 
         boletaRepository.deleteByFolio(folio);
         return true;
