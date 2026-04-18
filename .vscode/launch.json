@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "MsBoletasApplication",
+            "request": "launch",
+            "mainClass": "cl.duoc.msboletas.MsBoletasApplication",
+            "projectName": "sistemafinanciero"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-SistemafinancieroApplication<sistemafinanciero>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "cl.duoc.sistemafinanciero.SistemafinancieroApplication",
+            "projectName": "sistemafinanciero",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
