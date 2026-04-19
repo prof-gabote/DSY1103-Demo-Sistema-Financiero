@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MsPagosApplication",
+            "request": "launch",
+            "mainClass": "cl.duoc.mspagos.MsPagosApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "MsBoletasApplication",
             "request": "launch",
             "mainClass": "cl.duoc.msboletas.MsBoletasApplication",
@@ -14,6 +21,27 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "cl.duoc.sistemafinanciero.SistemafinancieroApplication",
             "projectName": "sistemafinanciero",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-MsPagosApplication<mspagos>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "cl.duoc.mspagos.MsPagosApplication",
+            "projectName": "mspagos",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=58574 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=mspagos"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-MsBoletasApplication<msboletas>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "cl.duoc.msboletas.MsBoletasApplication",
+            "projectName": "msboletas",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }

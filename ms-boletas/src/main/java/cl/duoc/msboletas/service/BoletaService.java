@@ -51,26 +51,26 @@ public class BoletaService {
 
     }
 
-    public boolean agregarBoleta(BoletaDTO boletaDTO) {
+    public BoletaDTO agregarBoleta(BoletaDTO boletaDTO) {
 
         if(boletaRepository.existsByFolio(boletaDTO.getFolio())) {
             throw new RecursoYaExisteException("Ya existe una boleta con el mismo número de folio.");
         }
 
         Boleta boleta = boletaDTOMapper.toModel(boletaDTO);
-        return boletaRepository.save(boleta) != null;
+        return boletaDTOMapper.toDTO(boletaRepository.save(boleta));
     }
 
-    public boolean actualizarBoleta(String folio, BoletaDTO boletaDTOActualizada) {
+    public BoletaDTO actualizarBoleta(BoletaDTO boletaDTOActualizada) {
 
-        Boleta boletaExistente = boletaRepository.findByFolio(folio);
-        if (boletaExistente == null || !boletaExistente.getFolio().equals(folio)) {
+        Boleta boletaExistente = boletaRepository.findByFolio(boletaDTOActualizada.getFolio());
+        if (boletaExistente == null || !boletaExistente.getFolio().equals(boletaDTOActualizada.getFolio())) {
             throw new RecursoNoEncontradoException("Número de folio incorrecto.");
         }
 
         Boleta boletaActualizada = boletaDTOMapper.toModel(boletaDTOActualizada);
         boletaActualizada.setId(boletaExistente.getId());
-        return boletaRepository.save(boletaActualizada) != null;
+        return boletaDTOMapper.toDTO(boletaRepository.save(boletaActualizada));
     }
 
     public boolean eliminarBoleta(String folio) {
@@ -81,6 +81,16 @@ public class BoletaService {
 
         boletaRepository.deleteByFolio(folio);
         return true;
+    }
+
+    public BoletaDTO actualizarBoleta(String folio, String estado) {
+        Boleta boletaExistente = boletaRepository.findByFolio(folio);
+        if (boletaExistente == null) {
+            throw new RecursoNoEncontradoException("Número de folio incorrecto.");
+        }
+
+        boletaExistente.setEstado(estado);
+        return boletaDTOMapper.toDTO(boletaRepository.save(boletaExistente));
     }
 
 }

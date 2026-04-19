@@ -26,6 +26,7 @@ public class BoletaDTOMapper {
         boletaDTO.setFecha(boleta.getFechaEmision());
         boletaDTO.setMontoBruto(boleta.getMontoBruto());
         boletaDTO.setMontoNeto(boleta.getMontoNeto());
+        boletaDTO.setEstado(boleta.getEstado());
 
         return boletaDTO;
     }

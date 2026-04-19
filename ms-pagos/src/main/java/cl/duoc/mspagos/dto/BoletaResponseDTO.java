@@ -1,14 +1,15 @@
-package cl.duoc.msboletas.dto;
+package cl.duoc.mspagos.dto;
 
 import java.time.LocalDate;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.Data;
 
 @Data
-public class BoletaDTO {
+public class BoletaResponseDTO {
 
     @NotNull(message = "El número de folio es obligatorio.")
     private String folio;
@@ -21,6 +22,7 @@ public class BoletaDTO {
     private LocalDate fecha;
     private int montoBruto; //Monto con IVA
     @Min(value = 1, message = "El monto neto no puede ser negativo ni 0.")
-    private int montoNeto; //Monto sin IVA   
-    private String estado; // Pendiente, Pagada, Anulada 
+    private int montoNeto; //Monto sin IVA  
+    @NotBlank(message = "La boleta llega sin estado.")
+    private String estado; // Pendiente, Pagada, Anulada  
 }

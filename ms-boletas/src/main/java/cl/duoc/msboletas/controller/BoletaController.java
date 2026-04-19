@@ -1,6 +1,7 @@
 package cl.duoc.msboletas.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cl.duoc.msboletas.dto.BoletaDTO;
@@ -39,15 +40,18 @@ public class BoletaController {
     }
 
     @PostMapping()
-    public ResponseEntity<BoletaDTO> agregarBoleta (@Valid @RequestBody BoletaDTO boletaDTO) {
-        boletaService.agregarBoleta(boletaDTO);
-        return ResponseEntity.ok(boletaDTO);
+    public ResponseEntity<Void> agregarBoleta (@Valid @RequestBody BoletaDTO boletaDTO) {
+        return ResponseEntity.created(null).build();
     }
 
-    @PutMapping("/{folio}")
-    public ResponseEntity<BoletaDTO> actualizaBoleta (@PathVariable String folio, @Valid @RequestBody BoletaDTO boletaDTO) {
-        boletaService.actualizarBoleta(folio, boletaDTO);
-        return ResponseEntity.ok(boletaDTO);
+    @PutMapping("")
+    public ResponseEntity<BoletaDTO> actualizaBoleta (@Valid @RequestBody BoletaDTO boletaDTO) {
+        return ResponseEntity.ok(boletaService.actualizarBoleta(boletaDTO));
+    }
+
+    @PutMapping("/estados")
+    public ResponseEntity<BoletaDTO> actualizaEstadoBoleta (@RequestParam String folio, @RequestParam String estado) {
+        return ResponseEntity.ok(boletaService.actualizarBoleta(folio, estado));
     }
 
     @DeleteMapping("/{folio}")
