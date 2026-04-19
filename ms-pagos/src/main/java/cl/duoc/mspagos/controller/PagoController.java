@@ -7,7 +7,6 @@ import cl.duoc.mspagos.dto.PagoRequestDTO;
 import cl.duoc.mspagos.dto.PagoResponseDTO;
 import cl.duoc.mspagos.model.Pago;
 import cl.duoc.mspagos.service.PagoService;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
