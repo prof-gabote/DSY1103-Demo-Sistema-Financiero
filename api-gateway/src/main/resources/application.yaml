@@ -8,13 +8,16 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: ms-boletas #Nombre del ms para el gateway. Identico al declarado en el application.properties del ms
-          uri: http://localhost:8081 #Ruta del ms
+        - id: msboletas #Nombre del ms para el gateway. Identico al declarado en el application.properties del ms
+          uri: lb://MSBOLETAS #Ruta del ms
           predicates:
             - Path=/api/v1/boletas/** #La ruta de un controlador del ms
-        - id: ms-pagos
-          uri: http://localhost:8082
+        - id: mspagos
+          uri: lb://MSPAGOS
           predicates:
-            -  Path=/api/v1/pagos/**          
+            -  Path=/api/v1/pagos/**       
     
-   
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
