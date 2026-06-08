@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  ## Desde aquí se define el gateway
+  cloud:
+    gateway:
+      routes:
+        - id: ms-boletas #Nombre del ms para el gateway. Identico al declarado en el application.properties del ms
+          uri: http://localhost:8081 #Ruta del ms
+          predicates:
+            - Path=/api/v1/boletas/** #La ruta de un controlador del ms
+        - id: ms-pagos
+          uri: http://localhost:8082
+          predicates:
+            -  Path=/api/v1/pagos/**          
+    
+   
